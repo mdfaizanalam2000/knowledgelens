@@ -10,7 +10,6 @@ def addTask(task=Body()):
    try:
     query=f"insert into task_manager values({task['task_id']},{task['user_id']},'{task['title']}','{task['description']}','{task['due_date']}','{task['status']}');"
 
-    print(query)
     cursor.execute(query).commit()
     return {"message":"success, task created!"}
    except Exception as e:
