@@ -1,10 +1,26 @@
 from server import Server
-from fastapi import FastAPI,Body
+from fastapi import FastAPI,Body,Depends,HTTPException,status
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from typing import Annotated
 
 app=FastAPI()
+security = HTTPBasic()
 
 server=Server()
 server.connect_to_server()
+
+def authenticate_user(credentials: HTTPBasicCredentials = Depends(security)):
+    correct_username = "john"
+    correct_password = "test123"
+ 
+    if credentials.username != correct_username or credentials.password != correct_password:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid credentials",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+ 
+    return "authentic"
 
 # ------------API ROUTES FOR HANDLING TASKS----------
 
@@ -14,7 +30,7 @@ def root(task=Body()):
    return res
 
 @app.get("/getAllTasks")
-def root():
+def root(credentials: Annotated[HTTPBasicCredentials, Depends(authenticate_user)]):
     res=server.getAllTasks()
     return res
     
