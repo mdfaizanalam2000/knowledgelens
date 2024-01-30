@@ -7,7 +7,6 @@ app=FastAPI()
 security = HTTPBasic()
 
 server=Server()
-server.connect_to_server()
 
 def authenticate_user(credentials: HTTPBasicCredentials = Depends(security)):
     correct_username = "john"
