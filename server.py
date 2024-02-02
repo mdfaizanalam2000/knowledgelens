@@ -29,14 +29,17 @@ class Server:
 
     # def addTask(self,task):
     #     try:
+    #         self.connect_to_server()
     #         query=f"exec AddTask @task_id={task['task_id']},@user_id={task['user_id']},@title ='{task['title']}',@description ='{task['description']}',@due_date='{task['due_date']}',@status='{task['status']}'"
 
-    #         result=self.execute_query(query)
-    #         self.cursor.commit()
-    #         return {"message":str(result)}
+    #         self.cursor.execute(query).commit()
+    #         return {"message":"success, task added!"}
     #         # return {"message":"success, task created!"}
     #     except Exception as e:
     #         return {"message":str(e)}
+    #     finally:
+    #         self.cursor.close()
+    #         print("Connection closed securely!")
         
     # METHODS TO PERFORM CRUD OPERATIONS ON TASKS
             
